@@ -109,7 +109,6 @@ describe("ScooterApp.rentScooter(scooter, user)", () => {
   });
 
   it("throws an error if a scooter is already rented", () => {
-    console.log(scooter)
     const user2 = new User("TestUser", "password2", 23)
 
     expect(() => app.rentScooter(scooter, user2)).toThrow("scooter already rented")
