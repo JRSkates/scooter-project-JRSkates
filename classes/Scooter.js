@@ -3,7 +3,7 @@ const User = require('./Scooter.js')
 class Scooter {
     static nextSerial = 1;
 
-    constructor(station) {
+    constructor(station=null) {
       this.station = station;
       this.user = null;
       this.serial = Scooter.nextSerial++;

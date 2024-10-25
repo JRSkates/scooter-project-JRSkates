@@ -4,9 +4,9 @@ const User = require("./User.js");
 class ScooterApp {
   constructor() {
     this.stations = {
-        "Station A": [],
-        "Station B": [],
-        "Station C": []
+      "Fulham": [],
+      "Hammersmith": [],
+      "Baker Street": []
     };
     this.registeredUsers = {};
   }
@@ -42,6 +42,31 @@ class ScooterApp {
     }
   }
 
+  createScooter(station) {
+    if(!this.stations[station]) {
+      throw new Error("no such station");
+    }
+
+    const newScooter = new Scooter(station)
+    this.stations[station].push(newScooter);
+
+    console.log("created new scooter");
+    return newScooter;
+  }
+
+  dockScooter(scooter, station) {
+    if(!this.stations[station]) {
+      throw new Error("no such station");
+    }
+
+    if(scooter.station === station) {
+      throw new Error("Scooter is already at a station");
+    }
+
+    scooter.dock(station);
+    this.stations[station].push(scooter);
+    console.log("scooter is docked");
+  }
 }
 
 module.exports = ScooterApp;

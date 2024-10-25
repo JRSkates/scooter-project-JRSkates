@@ -1,14 +1,15 @@
 const { describe, expect, it } = require("@jest/globals");
 const ScooterApp = require("../classes/ScooterApp.js");
 const User = require("../classes/User.js");
+const Scooter = require("../classes/Scooter.js");
 
 describe("ScooterApp setup", () => {
   const app = new ScooterApp();
   it("should initialize a ScooterApp", () => {
     expect(app.stations).toEqual({
-      "Station A": [],
-      "Station B": [],
-      "Station C": []
+      "Fulham": [],
+      "Hammersmith": [],
+      "Baker Street": []
     });
     expect(app.registeredUsers).toEqual({});
   });
@@ -33,7 +34,6 @@ describe("ScooterApp.loginUser(username, password)", () => {
   const app = new ScooterApp();
   it("logs in a registered user", () => {
     app.registerUsers("JRSkates", "password", 28)
-    console.log(app.registeredUsers);
     app.loginUser("JRSkates", "password");
     expect(app.registeredUsers["JRSkates"].isLoggedIn).toBe(true);
   });
@@ -61,36 +61,35 @@ describe("ScooterApp.logoutUser(username)", () => {
 });
 
 describe("ScooterApp.createScooter(station)", () => {
-  it.skip("creates a new scooter and adds it to ScooterApp.stations", () => {
-    // Arrange
-    // Act
-    // Assert
+  const app = new ScooterApp();
+  it("creates a new scooter and adds it to ScooterApp.stations", () => {
+    app.createScooter("Fulham")
+    expect(app.stations["Fulham"][0].station).toBe('Fulham');
+    expect(app.stations["Fulham"][0].user).toBe(null);
   });
 
-  it.skip("throws an error if a station does not exist", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("throws an error if a station does not exist", () => {
+    expect(() => app.createScooter("Earls Court")).toThrow("no such station");
   });
 });
 
 describe("ScooterApp.dockScooter(scooter, station)", () => {
-  it.skip("docks a scooter at a station", () => {
-    // Arrange
-    // Act
-    // Assert
+  const app = new ScooterApp();
+  it("docks a scooter at a station", () => {
+    const scooter = new Scooter()
+    app.dockScooter(scooter, "Fulham")
+
+    expect(app.stations["Fulham"][0].station).toBe('Fulham');
   });
 
-  it.skip("throws an error if a station does not exist", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("throws an error if a station does not exist", () => {
+    const scooter = new Scooter()
+    expect(() => app.dockScooter(scooter, "Earls Court")).toThrow("no such station");
   });
 
-  it.skip("throws an error if a scooter is already at a station", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("throws an error if a scooter is already at a station", () => {
+    const scooter = new Scooter("Fulham")
+    expect(() => app.dockScooter(scooter, "Fulham")).toThrow("Scooter is already at a station");
   });
 });
 
