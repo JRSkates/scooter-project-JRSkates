@@ -67,6 +67,31 @@ class ScooterApp {
     this.stations[station].push(scooter);
     console.log("scooter is docked");
   }
+
+  rentScooter(scooter, user) {
+    if(scooter.station === null) {
+      throw new Error("scooter already rented");
+    }
+
+    let found = false;
+    for(const station in this.stations) {
+      const index = this.stations[station].indexOf(scooter);
+        if (index !== -1) {
+          this.stations[station].splice(index, 1);
+          scooter.user = user;
+          scooter.station = null;
+          found = true;
+
+          console.log(`Scooter rented to ${user.username}:`, scooter);
+          break;
+      }
+    }
+  }
+
+  print() {
+    console.log(this.registeredUsers)
+    console.log(this.stations)
+  }
 }
 
 module.exports = ScooterApp;

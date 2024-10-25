@@ -94,15 +94,24 @@ describe("ScooterApp.dockScooter(scooter, station)", () => {
 });
 
 describe("ScooterApp.rentScooter(scooter, user)", () => {
-  it.skip("rents a scooter out to a user", () => {
-    // Arrange
-    // Act
-    // Assert
+  const app = new ScooterApp();
+  const scooter = new Scooter()
+  it("rents a scooter out to a user", () => {
+    const user = new User("JRSkates", "password", 28)
+
+    app.dockScooter(scooter, "Fulham")
+
+    app.rentScooter(scooter, user)
+    
+    expect(scooter.user.username).toBe(user.username);
+    expect(scooter.station).toBe(null)
+    expect(app.stations["Fulham"].length).toBe(0);
   });
 
-  it.skip("throws an error if a scooter is already rented", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("throws an error if a scooter is already rented", () => {
+    console.log(scooter)
+    const user2 = new User("TestUser", "password2", 23)
+
+    expect(() => app.rentScooter(scooter, user2)).toThrow("scooter already rented")
   });
 });
